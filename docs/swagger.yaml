@@ -9,6 +9,8 @@ servers:
 tags:
   - name: Feeds
     description: Operations related to RSS feeds
+  - name: Fetch
+    description: Operations related to fetching RSS feeds
 components:
   schemas:
     Feed:
@@ -48,7 +50,35 @@ components:
         url:
           type: string
           description: The URL of the feed
-      
+    RSSFeed:
+      type: object
+      xml:
+        name: rss
+      properties:
+        channel:
+          type: object
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+            link:
+              type: string
+            item:
+              type: array
+              items:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  show_name:
+                    type: string
+                  link:
+                    type: string
+                  pubDate:
+                    type: string
+                    format: date-time
+
 paths:
   /feeds:
     get:
@@ -163,7 +193,7 @@ paths:
           required: true
           schema:
             type: integer
-          description: The ID of the feed to delete. 
+          description: The ID of the feed to delete.
       responses:
         200:
           description: Feed deleted successfully.
@@ -176,4 +206,56 @@ paths:
                     type: string
                     description: Success message.
                     example: Feed deleted successfully
-        
+  /fetch:
+    get:
+      tags:
+        - Fetch
+      summary: Fetch RSS feeds
+      description: Fetches RSS feeds from the configured sources and returns them in XML format.
+      responses:
+        200:
+          description: Successfully fetched RSS feeds.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/RSSFeed'
+        500:
+          description: Error fetching RSS feeds.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+  /fetch/{url}:
+    get:
+      tags:
+        - Fetch
+      summary: Test fetch RSS feed by url
+      description: Tests fetching of RSS feed from the passed in sources and returns them in XML format.
+      parameters:
+        - in: path
+          name: url
+          required: true
+          schema:
+            type: string
+          description: The url of the feed to retrieve.
+      responses:
+        200:
+          description: Successfully fetched RSS feed.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/RSSFeed'
+        500:
+          description: Error fetching RSS feeds.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.

@@ -1,4 +1,4 @@
-import express, { NextFunction } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import { setupSwagger } from '@/swagger'
 import routes from '@/routes/routes'
 import { ErrorResponse } from '@/models/error'
@@ -15,9 +15,9 @@ app.use('/', routes)
 app.use(
 	(
 		err: ErrorResponse,
-		_req: express.Request,
-		res: express.Response,
-		next: NextFunction
+		_req: Request,
+		res: Response,
+		_next: NextFunction
 	) => {
 		res.status(err.status || 500).json({
 			message: err.message || 'Internal Server Error',
