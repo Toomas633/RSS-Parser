@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: RSS Parser API
+  version: 1.0.0
+  description: API documentation for the RSS Parser project
+servers:
+  - url: http://localhost:3000
+    description: Development server
+tags:
+  - name: Feeds
+    description: Operations related to RSS feeds
+components:
+  schemas:
+    Feed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the feed
+        name:
+          type: string
+          description: The name of the feed
+        url:
+          type: string
+          description: The URL of the feed
+      required:
+        - id
+        - name
+        - url
+    FeedAddRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the feed
+        url:
+          type: string
+          description: The URL of the feed
+      required:
+        - name
+        - url
+    FeedEditRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the feed
+        url:
+          type: string
+          description: The URL of the feed
+      
+paths:
+  /feeds:
+    get:
+      tags:
+        - Feeds
+      summary: Retrieve all feeds
+      description: Fetches a list of all RSS feeds.
+      responses:
+        200:
+          description: A list of feeds.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feed'
+    put:
+      tags:
+        - Feeds
+      summary: Add a new feed or feeds
+      description: Adds a new RSS feed to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FeedAddRequest'
+      responses:
+        200:
+          description: The created feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+  /feeds/{id}:
+    get:
+      tags:
+        - Feeds
+      summary: Retrieve feed by id
+      description: Fetches RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to retrieve.
+      responses:
+        200:
+          description: A given feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        404:
+          description: Feed not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Feed not found
+    post:
+      tags:
+        - Feeds
+      summary: Edit feed by id
+      description: Edits RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to edit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedEditRequest'
+      responses:
+        200:
+          description: The updated feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        404:
+          description: Feed not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Feed not found
+    delete:
+      tags:
+        - Feeds
+      summary: Delete feed by id
+      description: Deletes RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to delete. 
+      responses:
+        200:
+          description: Feed deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message.
+                    example: Feed deleted successfully
+        
