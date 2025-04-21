@@ -11,6 +11,8 @@ tags:
     description: Operations related to RSS feeds
   - name: Fetch
     description: Operations related to fetching RSS feeds
+  - name: Filters
+    description: Operations related to filters
 components:
   schemas:
     Feed:
@@ -32,7 +34,7 @@ components:
         - id
         - name
         - url
-    FeedAddRequest:
+    FeedAddEditRequest:
       type: object
       properties:
         name:
@@ -47,18 +49,45 @@ components:
       required:
         - name
         - url
-    FeedEditRequest:
+    Filter:
       type: object
       properties:
-        name:
+        feedId:
+          type: integer
+          description: The ID of the feed associated with the filter
+        exclude:
+          type: array
+          items:
+            type: string
+          description: List of keywords to exclude
+        seasonStart:
+          type: integer
+          description: Minimum season number to include
+        episodeStart:
+          type: integer
+          description: Minimum episode number to include
+        showName:
           type: string
-          description: The name of the feed
-        url:
+          description: Name of the show to filter
+      required:
+        - feedId
+    FilterAddEditRequest:
+      type: object
+      properties:
+        exclude:
+          type: array
+          items:
+            type: string
+          description: List of keywords to exclude
+        seasonStart:
+          type: integer
+          description: Minimum season number to include
+        episodeStart:
+          type: integer
+          description: Minimum episode number to include
+        showName:
           type: string
-          description: The URL of the feed
-        tv:
-          type: boolean
-          description: Indicates if the feed is a TV feed and should be filtered as such
+          description: Name of the show to filter
     RSSFeed:
       type: object
       xml:
@@ -123,7 +152,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/FeedAddRequest'
+                $ref: '#/components/schemas/FeedAddEditRequest'
       responses:
         200:
           description: The created feed.
@@ -135,8 +164,8 @@ paths:
     get:
       tags:
         - Feeds
-      summary: Retrieve feed by id
-      description: Fetches RSS feed by id.
+      summary: Retrieve feed by ID
+      description: Fetches RSS feed by ID.
       parameters:
         - in: path
           name: id
@@ -165,8 +194,8 @@ paths:
     post:
       tags:
         - Feeds
-      summary: Edit feed by id
-      description: Edits RSS feed by id.
+      summary: Edit feed by ID
+      description: Edits RSS feed by ID.
       parameters:
         - in: path
           name: id
@@ -179,7 +208,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FeedEditRequest'
+              $ref: '#/components/schemas/FeedAddEditRequest'
       responses:
         200:
           description: The updated feed.
@@ -201,8 +230,8 @@ paths:
     delete:
       tags:
         - Feeds
-      summary: Delete feed by id
-      description: Deletes RSS feed by id.
+      summary: Delete feed by ID
+      description: Deletes RSS feed by ID.
       parameters:
         - in: path
           name: id
@@ -249,7 +278,7 @@ paths:
     get:
       tags:
         - Fetch
-      summary: Test fetch RSS feed by url
+      summary: Test fetch RSS feed by URL
       description: Tests fetching of RSS feed from the passed-in sources and returns them in XML format.
       parameters:
         - in: path
@@ -275,3 +304,129 @@ paths:
                   message:
                     type: string
                     description: Error message.
+  /filter:
+    get:
+      tags:
+        - Filters
+      summary: Retrieve all filters
+      description: Fetches a list of all filters.
+      responses:
+        200:
+          description: A list of filters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filter'
+    put:
+      tags:
+        - Filters
+      summary: Add a new filter
+      description: Adds a new filter to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAddEditRequest'
+      responses:
+        200:
+          description: The created filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filter'
+  /filter/{feedId}:
+    get:
+      tags:
+        - Filters
+      summary: Retrieve filters by feed ID
+      description: Fetches filters associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to retrieve filters for.
+      responses:
+        200:
+          description: A list of filters for the feed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filter'
+        404:
+          description: Filters not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Filters not found
+    post:
+      tags:
+        - Filters
+      summary: Edit filter by feed ID
+      description: Edits a filter associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to edit the filter for.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterAddEditRequest'
+      responses:
+        200:
+          description: The updated filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filter'
+        404:
+          description: Filter not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Filter not found
+    delete:
+      tags:
+        - Filters
+      summary: Delete filter by feed ID
+      description: Deletes a filter associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to delete the filter for.
+      responses:
+        200:
+          description: Filter deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message.
+                    example: Filter deleted successfully

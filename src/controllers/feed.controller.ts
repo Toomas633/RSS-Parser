@@ -3,7 +3,7 @@ import { FeedService } from '@/services/feed.service'
 import { FilterService } from '@/services/filter.service'
 
 export class FeedController {
-	constructor(private readonly feedService: FeedService) {}
+	constructor(private readonly feedService: FeedService, private readonly filterService: FilterService) {}
 
 	public getFeeds(_req: Request, res: Response) {
 		res.send(this.feedService.fetchFeeds())

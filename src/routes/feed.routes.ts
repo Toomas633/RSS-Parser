@@ -1,9 +1,10 @@
 import { FeedController } from '@/controllers/feed.controller'
 import { FeedService } from '@/services/feed.service'
+import { FilterService } from '@/services/filter.service'
 import { Router } from 'express'
 
 const router = Router()
-const feedController = new FeedController(new FeedService())
+const feedController = new FeedController(new FeedService(), new FilterService())
 
 router.get('/', feedController.getFeeds.bind(feedController))
 router.put('/', feedController.addFeed.bind(feedController))
