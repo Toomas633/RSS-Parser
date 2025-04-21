@@ -1,9 +1,10 @@
 # TODO:
 
-- [ ] filtering based on SxxExx toggelable
-- [ ] quality filter
-
+* [ ] Dockerfile
 * [ ] UI
+
   - [ ] Management
   - [ ] jackett query builder
   - [ ] showrss query builder
+  - [ ] quality filter
+  - [ ] preview

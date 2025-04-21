@@ -17,7 +17,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
           description: The unique identifier for the feed
         name:
           type: string
@@ -25,6 +25,9 @@ components:
         url:
           type: string
           description: The URL of the feed
+        tv:
+          type: boolean
+          description: Indicates if the feed is a TV feed and should be filtered as such
       required:
         - id
         - name
@@ -38,6 +41,9 @@ components:
         url:
           type: string
           description: The URL of the feed
+        tv:
+          type: boolean
+          description: Indicates if the feed is a TV feed and should be filtered as such
       required:
         - name
         - url
@@ -50,6 +56,9 @@ components:
         url:
           type: string
           description: The URL of the feed
+        tv:
+          type: boolean
+          description: Indicates if the feed is a TV feed and should be filtered as such
     RSSFeed:
       type: object
       xml:
@@ -64,6 +73,9 @@ components:
               type: string
             link:
               type: string
+            length:
+              type: integer
+              description: The number of items in the feed
             item:
               type: array
               items:
@@ -78,6 +90,10 @@ components:
                   pubDate:
                     type: string
                     format: date-time
+                  season:
+                    type: integer
+                  episode:
+                    type: integer
 
 paths:
   /feeds:
@@ -234,14 +250,14 @@ paths:
       tags:
         - Fetch
       summary: Test fetch RSS feed by url
-      description: Tests fetching of RSS feed from the passed in sources and returns them in XML format.
+      description: Tests fetching of RSS feed from the passed-in sources and returns them in XML format.
       parameters:
         - in: path
           name: url
           required: true
           schema:
             type: string
-          description: The url of the feed to retrieve.
+          description: The URL of the feed to retrieve.
       responses:
         200:
           description: Successfully fetched RSS feed.

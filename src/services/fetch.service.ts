@@ -1,11 +1,15 @@
-import { RssItem } from '@/models/rss'
-import { loadFeedsFromFile } from '@/utils/feed'
-import { capitalize } from '@/utils/string'
-import { validateUrl } from '@/utils/url'
-import { escapeXml } from '@/utils/xml'
+import { RssItem } from '@/models/rss.model'
+import { loadFeedsFromFile } from '@/utils/feed.utils'
+import { capitalize } from '@/utils/string.utils'
+import { validateUrl } from '@/utils/url.utils'
+import { escapeXml } from '@/utils/xml.utils'
 import { parseStringPromise } from 'xml2js'
+import { FilterService } from './filter.service'
+import { Error } from '@/models/error.model'
 
 export class FetchService {
+	constructor(private readonly filterService: FilterService) {}
+
 	async fetch() {
 		const feeds = loadFeedsFromFile()
 
@@ -23,10 +27,10 @@ export class FetchService {
 					continue
 				}
 
-				const data = await this.prettifyResponse(response)
+				const data = await this.prettifyResponse(response, feed.tv)
 				results.push(...data)
 			} catch (error) {
-				throw new Error(`Error fetching feed ${feed.url}: ${error}`)
+				throw new Error(`Error fetching feed ${feed.url}`, 500, error as string)
 			}
 		}
 
@@ -108,9 +112,7 @@ export class FetchService {
 	}
 
 	async testFetch(url: string) {
-		if (!validateUrl(url)) {
-			return 'Invalid URL'
-		}
+		validateUrl(url)
 
 		try {
 			const response = await fetch(url)
@@ -122,7 +124,7 @@ export class FetchService {
 
 			return this.turnToRssFeed(data)
 		} catch (error) {
-			throw new Error(`Error fetching feed ${url}: ${error}`)
+			throw new Error(`Error fetching feed ${url}`, 500, error as string)
 		}
 	}
 }

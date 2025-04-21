@@ -1,5 +1,6 @@
-import { Feed } from '@/models/feed'
-import { addFeedsToFile, loadFeedsFromFile, validateFeed } from '@/utils/feed'
+import { Error } from '@/models/error.model'
+import { Feed } from '@/models/feed.model'
+import { addFeedsToFile, loadFeedsFromFile, validateFeed } from '@/utils/feed.utils'
 
 export class FeedService {
 	fetchFeeds() {
@@ -30,12 +31,13 @@ export class FeedService {
 		validateFeed(updatedFeed)
 		const feeds = loadFeedsFromFile()
 		const index = feeds.findIndex((feed) => feed.id === feedId)
-		if (index !== -1) {
-			feeds[index] = { ...feeds[index], ...updatedFeed } as Feed
-			addFeedsToFile(feeds)
-			return feeds[index]
-		} else {
-			return null
+		
+		if (index === -1) {
+			throw new Error('Feed not found', 404)
 		}
+
+		feeds[index] = { ...feeds[index], ...updatedFeed } as Feed
+		addFeedsToFile(feeds)
+		return feeds[index]
 	}
 }

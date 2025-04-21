@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import feedRoutes from './feedRoutes'
-import fetchRoutes from './fetchRoutes'
+import feedRoutes from './feed.routes'
+import fetchRoutes from './fetch.routes'
 
 const routes = Router()
 

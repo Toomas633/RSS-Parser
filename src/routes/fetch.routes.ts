@@ -1,5 +1,5 @@
-import { FetchController } from '@/controllers/fetch'
-import { FetchService } from '@/services/fetch'
+import { FetchController } from '@/controllers/fetch.controller'
+import { FetchService } from '@/services/fetch.service'
 import { Router } from 'express'
 
 const router = Router()

@@ -1,5 +1,5 @@
-import { FeedController } from '@/controllers/feed'
-import { FeedService } from '@/services/feed'
+import { FeedController } from '@/controllers/feed.controller'
+import { FeedService } from '@/services/feed.service'
 import { Router } from 'express'
 
 const router = Router()

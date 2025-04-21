@@ -1,7 +1,8 @@
-import { Feed } from '@/models/feed'
-import { isEmptyString } from './string'
+import { Feed } from '@/models/feed.model'
+import { isEmptyString } from './string.utils'
 import * as fs from 'fs'
 import * as path from 'path'
+import { Error } from '@/models/error.model'
 
 export function loadFeedsFromFile() {
 	const filePath = path.resolve('conf/feeds.json')
@@ -24,16 +25,23 @@ export function addFeedsToFile(feeds: Feed[]) {
 }
 
 export function validateFeed(feed: Partial<Feed> | Partial<Feed>[]) {
+	const requiredFields = ['name', 'url'];
 	if (Array.isArray(feed)) {
 		feed.forEach((f) => validateFeed(f))
 	} else {
-		for (const key in feed) {
-			if (key !== 'name' && key !== 'url') {
-				throw new Error(`Invalid feed property: ${key}`)
-			}
-			if (isEmptyString(feed[key])) {
-				throw new Error(`Feed ${key} cannot be empty`)
-			}
-		}
+		requiredFields.forEach((field) => {
+            if (!(field in feed)) {
+                throw new Error(`Missing required feed property: ${field}`, 400);
+            }
+			if (isEmptyString(feed[field as keyof Feed] as string | undefined)) {
+                throw new Error(`Feed ${field} cannot be empty`, 400);
+            }
+        });
+
+        for (const key in feed) {
+            if (!requiredFields.includes(key)) {
+                throw new Error(`Invalid feed property: ${key}`, 400);
+            }
+        }
 	}
 }

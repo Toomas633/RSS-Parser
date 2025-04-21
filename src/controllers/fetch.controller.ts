@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { FetchService } from '@/services/fetch'
+import { FetchService } from '@/services/fetch.service'
 
 export class FetchController {
 	constructor(private readonly fetchService: FetchService) {}

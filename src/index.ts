@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { setupSwagger } from '@/swagger'
 import routes from '@/routes/routes'
-import { ErrorResponse } from '@/models/error'
+import { Error } from '@/models/error.model'
 
 const app = express()
 const port = 3000
@@ -14,14 +14,14 @@ app.use('/', routes)
 
 app.use(
 	(
-		err: ErrorResponse,
+		err: Error,
 		_req: Request,
 		res: Response,
 		_next: NextFunction
 	) => {
-		res.status(err.status || 500).json({
-			message: err.message || 'Internal Server Error',
-			status: err.status || 500,
+		res.status(err.status ?? 500).json({
+			message: err.message ?? 'Internal Server Error',
+			status: err.status ?? 500,
 		})
 	}
 )
