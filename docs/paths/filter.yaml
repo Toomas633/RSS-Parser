@@ -1,0 +1,118 @@
+openapi: 3.0.0
+paths:
+  /filter:
+    get:
+      tags:
+        - Filters
+      summary: Retrieve all filters
+      description: Fetches a list of all filters.
+      responses:
+        200:
+          description: A list of filters.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filter'
+    put:
+      tags:
+        - Filters
+      summary: Add a new filter
+      description: Adds a new filter to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/FilterAddEdit'
+      responses:
+        200:
+          description: The created filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filter'
+  /filter/{feedId}:
+    get:
+      tags:
+        - Filters
+      summary: Retrieve filters by feed ID
+      description: Fetches filters associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to retrieve filters for.
+      responses:
+        200:
+          description: A list of filters for the feed.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Filter'
+        404:
+          description: Filters not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/FilterNotFound'
+    post:
+      tags:
+        - Filters
+      summary: Edit filter by feed ID
+      description: Edits a filter associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to edit the filter for.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/FilterAddEdit'
+      responses:
+        200:
+          description: The updated filter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Filter'
+        404:
+          description: Filter not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/FilterNotFound'
+    delete:
+      tags:
+        - Filters
+      summary: Delete filter by feed ID
+      description: Deletes a filter associated with a specific feed ID.
+      parameters:
+        - in: path
+          name: feedId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to delete the filter for.
+      responses:
+        200:
+          description: Filter deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message.
+                    example: Filter deleted successfully

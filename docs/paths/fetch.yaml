@@ -1,0 +1,47 @@
+openapi: 3.0.0
+paths:
+  /fetch:
+    get:
+      tags:
+        - Fetch
+      summary: Fetch RSS feeds
+      description: Fetches RSS feeds from the configured sources and returns them in XML format.
+      responses:
+        200:
+          description: Successfully fetched RSS feeds.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/RSSFeed'
+        500:
+          description: Error fetching RSS feeds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'
+  /fetch/{url}:
+    get:
+      tags:
+        - Fetch
+      summary: Test fetch RSS feed by url
+      description: Tests fetching of RSS feed from the passed-in sources and returns them in XML format.
+      parameters:
+        - in: path
+          name: url
+          required: true
+          schema:
+            type: string
+          description: The URL of the feed to retrieve.
+      responses:
+        200:
+          description: Successfully fetched RSS feed.
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/RSSFeed'
+        500:
+          description: Error fetching RSS feeds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/ErrorResponse'

@@ -1,0 +1,35 @@
+openapi: 3.0.0
+components:
+  requestBodies:
+    FeedAddEdit:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the feed
+        url:
+          type: string
+          description: The URL of the feed
+        tv:
+          type: boolean
+          description: Indicates if the feed is a TV feed and should be filtered as such
+      required:
+        - name
+        - url
+    FilterAddEdit: 
+      type: object
+      properties:
+        exclude:
+          type: array
+          items:
+            type: string
+          description: List of keywords to exclude
+        seasonStart:
+          type: integer
+          description: Minimum season number to include
+        episodeStart:
+          type: integer
+          description: Minimum episode number to include
+        showName:
+          type: string
+          description: Name of the show to filter

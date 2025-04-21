@@ -1,0 +1,113 @@
+openapi: 3.0.0
+paths:
+  /feeds:
+    get:
+      tags:
+        - Feeds
+      summary: Retrieve all feeds
+      description: Fetches a list of all RSS feeds.
+      responses:
+        200:
+          description: A list of feeds.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feed'
+    put:
+      tags:
+        - Feeds
+      summary: Add a new feed or feeds
+      description: Adds a new RSS feed to the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/requestBodies/FeedAddEdit'
+      responses:
+        200:
+          description: The created feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+  /feeds/{id}:
+    get:
+      tags:
+        - Feeds
+      summary: Retrieve feed by id
+      description: Fetches RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to retrieve.
+      responses:
+        200:
+          description: A given feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        404:
+          description: Feed not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/FeedNotFound'
+    post:
+      tags:
+        - Feeds
+      summary: Edit feed by id
+      description: Edits RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to edit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/FeedAddEdit'
+      responses:
+        200:
+          description: The updated feed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        404:
+          description: Feed not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/FeedNotFound'
+    delete:
+      tags:
+        - Feeds
+      summary: Delete feed by id
+      description: Deletes RSS feed by id.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the feed to delete.
+      responses:
+        200:
+          description: Feed deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/FeedDeleted'

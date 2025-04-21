@@ -1,0 +1,43 @@
+openapi: 3.0.0
+components:
+  responses:
+    FeedNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message.
+          example: Feed not found
+    FilterNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Filter not found
+    FeedDeleted:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Feed deleted successfully
+    FilterDeleted:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Filter deleted successfully
+    FetchSuccess:
+      $ref: '#/components/schemas/RSSFeed'
+    FetchError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error fetching RSS feeds
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message.
+          example: An error occurred while processing the request.
