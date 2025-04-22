@@ -5,7 +5,7 @@ info:
   description: API documentation for the RSS Parser project
 servers:
   - url: http://localhost:3000/api
-    description: Development server
+    description: RSS Parser API server
 components:
   securitySchemes:
     ApiKeyAuth:

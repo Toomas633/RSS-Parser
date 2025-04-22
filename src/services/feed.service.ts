@@ -1,6 +1,10 @@
 import { Error } from '@/models/error.model'
 import { Feed } from '@/models/feed.model'
-import { addFeedsToFile, loadFeedsFromFile, validateFeed } from '@/utils/feed.utils'
+import {
+	addFeedsToFile,
+	loadFeedsFromFile,
+	validateFeed,
+} from '@/utils/feed.utils'
 
 export class FeedService {
 	fetchFeeds() {
@@ -31,7 +35,7 @@ export class FeedService {
 		validateFeed(updatedFeed)
 		const feeds = loadFeedsFromFile()
 		const index = feeds.findIndex((feed) => feed.id === feedId)
-		
+
 		if (index === -1) {
 			throw new Error('Feed not found', 404)
 		}

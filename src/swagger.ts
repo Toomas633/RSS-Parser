@@ -19,17 +19,31 @@ function getAllYamlFiles(dir: string): string[] {
 	return yamlFiles
 }
 
-function deepMerge(target: any, source: any): any {
+function deepMerge(
+	target: Record<string, unknown>,
+	source: Record<string, unknown>
+) {
 	for (const key of Object.keys(source)) {
+		const sourceValue = source[key]
+		const targetValue = target[key]
 		if (
-			source[key] &&
-			typeof source[key] === 'object' &&
-			!Array.isArray(source[key])
+			sourceValue &&
+			typeof sourceValue === 'object' &&
+			!Array.isArray(sourceValue)
 		) {
-			target[key] ??= {}
-			deepMerge(target[key], source[key])
+			if (
+				!targetValue ||
+				typeof targetValue !== 'object' ||
+				Array.isArray(targetValue)
+			) {
+				target[key] = {}
+			}
+			deepMerge(
+				target[key] as Record<string, unknown>,
+				sourceValue as Record<string, unknown>
+			)
 		} else {
-			target[key] = source[key]
+			target[key] = sourceValue
 		}
 	}
 	return target
@@ -38,7 +52,7 @@ function deepMerge(target: any, source: any): any {
 const docsDir = path.resolve(__dirname, '../docs')
 const yamlFiles = getAllYamlFiles(docsDir)
 
-let swaggerSpec: any = {}
+let swaggerSpec: Record<string, unknown> = {}
 for (const yamlFile of yamlFiles) {
 	const doc = YAML.load(yamlFile)
 	swaggerSpec = deepMerge(swaggerSpec, doc)

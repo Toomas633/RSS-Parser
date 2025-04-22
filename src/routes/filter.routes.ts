@@ -1,6 +1,6 @@
-import { FilterController } from "@/controllers/filter.controller";
-import { FilterService } from "@/services/filter.service";
-import { Router } from "express";
+import { FilterController } from '@/controllers/filter.controller'
+import { FilterService } from '@/services/filter.service'
+import { Router } from 'express'
 
 const routes = Router()
 const filterController = new FilterController(new FilterService())

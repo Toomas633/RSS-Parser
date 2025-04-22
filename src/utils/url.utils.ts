@@ -1,4 +1,4 @@
-import { Error } from "@/models/error.model"
+import { Error } from '@/models/error.model'
 
 export function validateUrl(url: string) {
 	try {

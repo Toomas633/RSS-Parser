@@ -60,11 +60,16 @@ export class FetchService {
 					pubDate: item.pubDate[0],
 				} as RssItem
 			}
-			const showName = match[1].trim().toLowerCase().split(' ').map((word, index) => capitalize(word, index)).join(' ')
-			const season = match[2];
-			const episode = match[3];
+			const showName = match[1]
+				.trim()
+				.toLowerCase()
+				.split(' ')
+				.map((word, index) => capitalize(word, index))
+				.join(' ')
+			const season = match[2]
+			const episode = match[3]
 
-			const updatedTitle = `${showName} S${season}E${episode}${title.slice(match[0].length)}`;
+			const updatedTitle = `${showName} S${season}E${episode}${title.slice(match[0].length)}`
 
 			return {
 				title: updatedTitle,

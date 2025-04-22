@@ -4,8 +4,8 @@ export class Error {
 	status: number
 
 	constructor(message: string, status?: number, stack?: string) {
-        this.message = message;
-        this.status = status ?? 500;
-        this.stack = stack;
-    }
+		this.message = message
+		this.status = status ?? 500
+		this.stack = stack
+	}
 }

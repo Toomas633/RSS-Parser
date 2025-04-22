@@ -3,7 +3,7 @@ import { setupSwagger } from '@/swagger'
 import routes from '@/routes/routes'
 import { Error } from '@/models/error.model'
 import dotenv from 'dotenv'
-import { apiKeyAuth } from './utils/auth'
+import { apiKeyAuth } from './auth/auth'
 
 dotenv.config()
 
@@ -24,6 +24,6 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 })
 
 app.listen(port, () => {
-	console.log(`Server is running on http://localhost:${port}/api`)
-	console.log(`Swagger docs available at http://localhost:${port}/api-docs`)
+	console.info(`Server is running on http://localhost:${port}/api`)
+	console.info(`Swagger docs available at http://localhost:${port}/api-docs`)
 })

@@ -3,6 +3,6 @@ export interface RssItem {
 	link: string
 	pubDate: string
 	showName: string
-	season: number,
-	episode: number, 
+	season: number
+	episode: number
 }

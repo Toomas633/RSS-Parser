@@ -11,9 +11,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@conf*": ["conf/*"],
-      "@docs*": ["docs/*"],
-      "@backend": ["backend/*"],
     }
   },
   "include": ["src/**/*", "src/swagger.ts"],
