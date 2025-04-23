@@ -1,0 +1,13 @@
+.git/
+.vscode/
+data/
+dist/
+node_modules/
+.env
+.gitignore
+.prettierignore
+.prettierrc
+eslint.config.mjs
+nodemon.json
+LICENSE
+README.md

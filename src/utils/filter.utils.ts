@@ -4,8 +4,9 @@ import { Filter } from '@/models/filter.model'
 import { Error } from '@/models/error.model'
 import { RssItem } from '@/models/rss.model'
 
+const filePath = path.resolve(__dirname, '../../data/filters.json')
+
 export function loadFiltersFromFile(feedId?: number) {
-	const filePath = path.resolve('data/filters.json')
 	try {
 		const data = fs.readFileSync(filePath, 'utf-8')
 		const filters = JSON.parse(data) as Filter[]
@@ -17,7 +18,6 @@ export function loadFiltersFromFile(feedId?: number) {
 }
 
 export function addFiltersToFile(filters: Filter[]) {
-	const filePath = path.resolve('data/filters.json')
 	try {
 		const data = JSON.stringify(filters, null, 2)
 		fs.writeFileSync(filePath, data, 'utf-8')

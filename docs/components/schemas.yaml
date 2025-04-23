@@ -69,7 +69,7 @@ components:
                   show_name:
                     type: string
                   link:
-                  type: string
+                    type: string
                   pubDate:
                     type: string
                     format: date-time

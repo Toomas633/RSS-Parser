@@ -4,8 +4,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { Error } from '@/models/error.model'
 
+const filePath = path.resolve(__dirname, '../../data/feeds.json')
+
 export function loadFeedsFromFile() {
-	const filePath = path.resolve('data/feeds.json')
 	try {
 		const data = fs.readFileSync(filePath, 'utf-8')
 		return JSON.parse(data) as Feed[]
@@ -15,7 +16,6 @@ export function loadFeedsFromFile() {
 }
 
 export function addFeedsToFile(feeds: Feed[]) {
-	const filePath = path.resolve('data/feeds.json')
 	try {
 		const data = JSON.stringify(feeds, null, 2)
 		fs.writeFileSync(filePath, data, 'utf-8')

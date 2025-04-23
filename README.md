@@ -6,5 +6,3 @@
   - [ ] showrss query builder
   - [ ] quality filter
   - [ ] preview
-
-* [ ] Dockerfile

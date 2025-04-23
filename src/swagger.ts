@@ -50,6 +50,7 @@ function deepMerge(
 }
 
 const docsDir = path.resolve(__dirname, '../docs')
+
 const yamlFiles = getAllYamlFiles(docsDir)
 
 let swaggerSpec: Record<string, unknown> = {}

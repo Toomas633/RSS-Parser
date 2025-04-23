@@ -3,12 +3,12 @@ import { setupSwagger } from '@/swagger'
 import routes from '@/routes/routes'
 import { Error } from '@/models/error.model'
 import dotenv from 'dotenv'
-import { apiKeyAuth } from './auth/auth'
+import { apiKeyAuth } from '@/auth/auth'
 
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT ?? 3000
+const port = 3000
 
 app.use(express.json())
 
