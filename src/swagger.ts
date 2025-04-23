@@ -49,7 +49,7 @@ function deepMerge(
 	return target
 }
 
-const docsDir = path.resolve(__dirname, '../docs')
+const docsDir = path.resolve(__dirname, '..', 'docs')
 
 const yamlFiles = getAllYamlFiles(docsDir)
 

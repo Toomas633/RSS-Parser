@@ -4,7 +4,7 @@ import { Filter } from '@/models/filter.model'
 import { Error } from '@/models/error.model'
 import { RssItem } from '@/models/rss.model'
 
-const filePath = path.resolve(__dirname, '../../data/filters.json')
+const filePath = path.resolve(__dirname, '../..', 'data/filters.json')
 
 export function loadFiltersFromFile(feedId?: number) {
 	try {

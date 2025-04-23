@@ -1,11 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { setupSwagger } from '@/swagger'
+import { setupSwagger } from './swagger'
 import routes from '@/routes/routes'
 import { Error } from '@/models/error.model'
 import dotenv from 'dotenv'
 import { apiKeyAuth } from '@/auth/auth'
+import { initDataFolder } from './data'
 
 dotenv.config()
+
+initDataFolder()
 
 const app = express()
 const port = 3000
