@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { Error } from '@/models/error.model'
 
-const filePath = path.resolve(__dirname, '../..', 'data/feeds.json')
+const filePath = path.resolve(__dirname, '../../..', 'data/feeds.json')
 
 export function loadFeedsFromFile() {
 	try {

@@ -1,37 +1,6 @@
 {
-  "name": "rss-parser",
-  "version": "1.0.0",
-  "description": "A Node.js backend application written in TypeScript.",
-  "main": "src/index.ts",
-  "scripts": {
-    "build": "tsc && tsc-alias",
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
-    "prettier-fix": "prettier --write ./src",
-    "lint": "eslint . --ext .ts --fix"
-  },
-  "dependencies": {
-    "@auth/express": "^0.10.0",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "swagger-ui-express": "^5.0.1",
-    "tsconfig-paths": "^4.2.0",
-    "xml2js": "^0.6.2",
-    "yamljs": "^0.3.0"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/node": "^22.14.1",
-    "@types/swagger-ui-express": "^4.1.8",
-    "@types/xml2js": "^0.4.14",
-    "@types/yamljs": "^0.2.34",
-    "@typescript-eslint/eslint-plugin": "^8.31.0",
-    "@typescript-eslint/parser": "^8.31.0",
-    "eslint": "^9.25.1",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.5.3",
-    "ts-node": "^10.9.2",
-    "tsc-alias": "^1.8.15",
-    "typescript": "^5.8.3"
+    "name": "rss-parser",
+    "version": "1.0.0",
+    "description": "RSS Parser application"
   }
-}
+  

@@ -4,10 +4,11 @@ import routes from '@/routes/routes'
 import { Error } from '@/models/error.model'
 import dotenv from 'dotenv'
 import { apiKeyAuth } from '@/auth/auth'
-import { initDataFolder } from './data'
+import { initDataFolder, initEnv } from './init'
 
 dotenv.config()
 
+initEnv()
 initDataFolder()
 
 const app = express()
