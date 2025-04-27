@@ -70,6 +70,7 @@ watch(valid, (newValue) => emit('valid', newValue))
 
 watch([name, url, tv], (newValue) => {
 	const feed: Feed = {
+		id: 0,
 		name: newValue[0],
 		url: newValue[1],
 		tv: newValue[2],

@@ -1,5 +1,5 @@
 export interface Feed {
-	id?: number
+	id: number
 	name: string
 	url: string
 	tv?: boolean

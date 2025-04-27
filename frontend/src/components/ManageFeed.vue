@@ -18,7 +18,8 @@
 		<div>
 			<v-btn
 				class="mt-1 mr-2"
-				color="amber"
+				color="primary"
+				variant="outlined"
 				prepend-icon="mdi-message-text-fast"
 				:disabled="testLoading"
 				:loading="testLoading"
@@ -41,11 +42,18 @@
 
 <script lang="ts" setup>
 import { testFetch } from '@/repositories/fetch.repository'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import FeedForm from '@/components/FeedForm.vue'
 import type { Feed } from '@/models/feed.model'
 import { QueryType } from '@/enums/queryType'
 import type { Filter } from '@/models/filter.model'
+import { addFeed, updateFeed } from '@/repositories/feed.repository'
+import {
+	addFilter,
+	deleteFilter,
+	getFilter,
+	updateFilter,
+} from '@/repositories/filter.repository'
 
 const props = defineProps<{
 	feed?: Feed
@@ -62,6 +70,7 @@ const valid = computed(() => {
 })
 
 const newFeed = ref<Feed>({
+	id: 0,
 	name: '',
 	url: '',
 	tv: false,
@@ -74,6 +83,13 @@ const filter = ref<Filter>({
 	seasonStart: 0,
 	episodeStart: 0,
 	exclude: [],
+})
+
+onMounted(async () => {
+	if (props.feed) {
+		newFeed.value = props.feed
+		filter.value = await getFilter(props.feed.id)
+	}
 })
 
 async function test() {
@@ -92,21 +108,43 @@ async function test() {
 }
 
 async function submit() {
-	const feed = {
-		name: FeedForm.name,
-		url: FeedForm.url,
-		tv: FeedForm.tv,
+	const feed: Feed = {
+		...props.feed,
+		...newFeed.value,
 	}
 	if (valid.value) {
-		testLoading.value = true
-
-		// TODO emit('close')
+		loading.value = true
+		if (props.feed?.id) {
+			await update(feed).finally(() => (loading.value = false))
+		} else {
+			await addNew(feed).finally(() => (loading.value = false))
+		}
 	}
 	loading.value = false
 }
 
+async function update(feed: Feed) {
+	await updateFeed(feed.id, feed)
+	if (addFilters.value && filter.value) {
+		await updateFilter(feed.id, filter.value)
+	}
+	if (!addFilters.value && filter.value) {
+		await deleteFilter(feed.id)
+	}
+}
+
+async function addNew(feed: Feed) {
+	await addFeed({ ...feed, id: undefined }).then(async (addedFeed) => {
+		if (filter.value) {
+			await addFilter({
+				feedId: addedFeed.id,
+				...filter.value,
+			})
+		}
+	})
+}
+
 function validateFilters() {
-	console.log(filter.value)
 	if (!addFilters.value) {
 		return true
 	}

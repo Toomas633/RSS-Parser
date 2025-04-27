@@ -37,11 +37,5 @@ export function validateFeed(feed: Partial<Feed> | Partial<Feed>[]) {
 				throw new Error(`Feed ${field} cannot be empty`, 400)
 			}
 		})
-
-		for (const key in feed) {
-			if (!requiredFields.includes(key)) {
-				throw new Error(`Invalid feed property: ${key}`, 400)
-			}
-		}
 	}
 }

@@ -37,8 +37,8 @@ paths:
     get:
       tags:
         - Filters
-      summary: Retrieve filters by feed ID
-      description: Fetches filters associated with a specific feed ID.
+      summary: Retrieve filter by feed ID
+      description: Fetches filter associated with a specific feed ID.
       parameters:
         - in: path
           name: feedId
@@ -48,13 +48,11 @@ paths:
           description: The ID of the feed to retrieve filters for.
       responses:
         200:
-          description: A list of filters for the feed.
+          description: Filter for the feed.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Filter'
+                $ref: '#/components/schemas/Filter'
         404:
           description: Filters not found.
           content:

@@ -13,7 +13,7 @@ export class FilterController {
 			parseInt(req.params.feedId, 10)
 		)
 		if (filter) {
-			res.status(200).send(filter)
+			res.status(200).send(filter[0])
 		} else {
 			res.status(404).send({ message: 'Filter not found' })
 		}

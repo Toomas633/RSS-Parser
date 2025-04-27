@@ -12,16 +12,9 @@ export async function getFeeds() {
 		})
 }
 
-export async function addFeed(feed: Feed) {
+export async function addFeed(feed: Partial<Feed>) {
 	return api
 		.put('/feeds', feed)
-		.then((response) => response.data)
-		.catch((error) => handleAxiosError(error))
-}
-
-export async function getFeedById(id: number) {
-	return api
-		.get(`/feeds/${id}`)
 		.then((response) => response.data)
 		.catch((error) => handleAxiosError(error))
 }

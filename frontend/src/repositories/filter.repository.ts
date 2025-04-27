@@ -9,7 +9,7 @@ export async function addFilter(filter: Filter) {
 		.catch((error) => handleAxiosError(error))
 }
 
-export function getFilter(feedId: number) {
+export async function getFilter(feedId: number) {
 	return api
 		.get(`/filter/${feedId}`)
 		.then((response) => response.data)

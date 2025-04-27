@@ -11,9 +11,12 @@ export class FeedService {
 		return loadFeedsFromFile()
 	}
 
-	addFeed(feed: Partial<Feed>[]) {
+	addFeed(feed: Partial<Feed>[] | Partial<Feed>) {
 		validateFeed(feed)
 		const feeds = loadFeedsFromFile()
+		if (!Array.isArray(feed)) {
+			feed = [feed]
+		}
 		for (const f of feed) {
 			feeds.push({ id: feeds.length + 1, ...f } as Feed)
 		}
