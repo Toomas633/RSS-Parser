@@ -6,6 +6,6 @@ const router = Router()
 const fetchController = new FetchController(new FetchService())
 
 router.get('/', fetchController.fetch.bind(fetchController))
-router.get('/:url', fetchController.testFetch.bind(fetchController))
+router.post('/', fetchController.testFetch.bind(fetchController))
 
 export default router

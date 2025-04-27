@@ -11,7 +11,7 @@ export class FetchController {
 	}
 
 	public async testFetch(req: Request, res: Response) {
-		const url = req.params.url
+		const url = req.body.url
 		const result = await this.fetchService.testFetch(url)
 		res.send(result)
 	}

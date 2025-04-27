@@ -1,0 +1,50 @@
+{
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.quickSuggestions": {
+			"strings": true
+		},
+		"editor.suggest.insertMode": "replace"
+	},
+	"vetur.format.defaultFormatter.html": "prettier",
+	"vetur.format.defaultFormatter.js": "prettier",
+	"vetur.format.defaultFormatter.ts": "prettier",
+	"vetur.format.defaultFormatterOptions": {
+		"prettier": {
+			"tabWidth": 2,
+			"useTabs": true,
+			"singleQuote": true,
+			"trailingComma": "es5",
+			"bracketSpacing": true,
+			"bracketSameLine": true,
+			"jsxSingleQuote": true,
+			"jsxBracketSameLine": true,
+			"semi": false,
+			"printWidth": 80,
+			"endOfLine": "crlf"
+		}
+	},
+	"prettier.useEditorConfig": false,
+	"prettier.requireConfig": true,
+	"prettier.configPath": ".prettierrc",
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"[xml]": {
+		"editor.defaultFormatter": "redhat.vscode-xml"
+	}
+}

@@ -48,8 +48,22 @@ export function filter(feedId: number, rssItems: RssItem[]) {
 		const { exclude, seasonStart, episodeStart, showName } = filter[0]
 		const isExcluded =
 			exclude?.some((exclusion) => item.title.includes(exclusion)) ?? false
-		const isSeasonValid = item.season >= (seasonStart ?? 0)
-		const isEpisodeValid = item.episode >= (episodeStart ?? 0)
+		const isSeasonValid = item.season ?? 0 >= (seasonStart ?? 0)
+		const isEpisodeValid = item.episode ?? 0 >= (episodeStart ?? 0)
+		const isNameValid = showName ? showName === item.showName : true
+		return !isExcluded && isSeasonValid && isEpisodeValid && isNameValid
+	})
+}
+
+export function testFilter(rssItems: RssItem[], filter?: Filter) {
+	if (!filter) return rssItems
+
+	return rssItems.filter((item) => {
+		const { exclude, seasonStart, episodeStart, showName } = filter
+		const isExcluded =
+			exclude?.some((exclusion) => item.title.includes(exclusion)) ?? false
+		const isSeasonValid = item.season ?? 0 >= (seasonStart ?? 0)
+		const isEpisodeValid = item.episode ?? 0 >= (episodeStart ?? 0)
 		const isNameValid = showName ? showName === item.showName : true
 		return !isExcluded && isSeasonValid && isEpisodeValid && isNameValid
 	})

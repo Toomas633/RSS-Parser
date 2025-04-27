@@ -1,4 +1,5 @@
-export function escapeXml(unsafe: string): string {
+export function escapeXml(unsafe?: string): string {
+	if (!unsafe) return ''
 	return unsafe
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')

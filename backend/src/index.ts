@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
+import cors from 'cors'
 import { setupSwagger } from './swagger'
 import routes from '@/routes/routes'
 import { Error } from '@/models/error.model'
@@ -14,6 +15,7 @@ initDataFolder()
 const app = express()
 const port = 3000
 
+app.use(cors())
 app.use(express.json())
 
 setupSwagger(app)
@@ -24,6 +26,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 	res.status(err.status ?? 500).json({
 		message: err.message ?? 'Internal Server Error',
 		status: err.status ?? 500,
+		stack: err.stack,
 	})
 })
 

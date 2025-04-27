@@ -19,19 +19,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/ErrorResponse'
-  /fetch/{url}:
-    get:
+    post:
       tags:
         - Fetch
       summary: Test fetch RSS feed by url
       description: Tests fetching of RSS feed from the passed-in sources and returns them in XML format.
-      parameters:
-        - in: path
-          name: url
-          required: true
-          schema:
-            type: string
-          description: The URL of the feed to retrieve.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The URL of the feed to retrieve.
+                tv:
+                  type: boolean
+                  description: Whether to filter as TV show or not.
+                filter:
+                  $ref: '#/components/schemas/Filter'
+                  description: The filter to apply to the feed.
+            required:
+              - url
       responses:
         200:
           description: Successfully fetched RSS feed.

@@ -5,7 +5,8 @@ import { validateUrl } from '@/utils/url.utils'
 import { escapeXml } from '@/utils/xml.utils'
 import { parseStringPromise } from 'xml2js'
 import { Error } from '@/models/error.model'
-import { filter } from '@/utils/filter.utils'
+import { filter, testFilter } from '@/utils/filter.utils'
+import { Filter } from '@/models/filter.model'
 
 export class FetchService {
 	async fetch() {
@@ -91,8 +92,8 @@ export class FetchService {
                 <show_name>${escapeXml(item.showName)}</show_name>
                 <link>${escapeXml(item.link)}</link>
                 <pubDate>${escapeXml(item.pubDate)}</pubDate>
-				<season>${escapeXml(item.season.toString())}</season>
-				<episode>${escapeXml(item.episode.toString())}</episode>
+				<season>${escapeXml(item.season?.toString())}</season>
+				<episode>${escapeXml(item.episode?.toString())}</episode>
             </item>
         `
 			)
@@ -114,20 +115,16 @@ export class FetchService {
 		return rssFeed.trim()
 	}
 
-	async testFetch(url: string) {
+	async testFetch(url: string, tv?: boolean, filter?: Filter) {
 		validateUrl(url)
 
-		try {
-			const response = await fetch(url)
-			if (!response.ok) {
-				throw new Error(`Failed to fetch ${url}: ${response.statusText}`)
-			}
-
-			const data = await this.prettifyResponse(response)
-
-			return this.turnToRssFeed(data)
-		} catch (error) {
-			throw new Error(`Error fetching feed ${url}`, 500, error as string)
-		}
+		return await fetch(url)
+			.then(async (response) => {
+				const data = await this.prettifyResponse(response, tv)
+				return this.turnToRssFeed(testFilter(data, filter))
+			})
+			.catch((error) => {
+				throw new Error(`Error fetching feed ${url}`, 500, error.toString())
+			})
 	}
 }

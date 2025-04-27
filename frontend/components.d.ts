@@ -8,8 +8,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddFeed: typeof import('./src/components/AddFeed.vue')['default']
+    CustomHeader: typeof import('./src/components/CustomHeader.vue')['default']
+    FeedList: typeof import('./src/components/FeedList.vue')['default']
+    FeedSettings: typeof import('./src/components/FeedSettings.vue')['default']
+    Header: typeof import('./src/components/header.vue')['default']
+    'Header.component': typeof import('./src/components/header.component.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    RssView: typeof import('./src/components/RssView.vue')['default']
   }
 }
