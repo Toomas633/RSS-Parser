@@ -6,7 +6,10 @@ export async function getFeeds() {
 	return api
 		.get('/feeds')
 		.then((response) => response.data as Feed[])
-		.catch((error) => handleAxiosError(error))
+		.catch((error) => {
+			handleAxiosError(error)
+			return [] as Feed[]
+		})
 }
 
 export async function addFeed(feed: Feed) {

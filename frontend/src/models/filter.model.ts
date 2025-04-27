@@ -1,5 +1,5 @@
 export interface Filter {
-	feedId: number
+	feedId?: number
 	exclude?: string[]
 	seasonStart?: number
 	episodeStart?: number

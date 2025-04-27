@@ -12,7 +12,9 @@ export class FetchController {
 
 	public async testFetch(req: Request, res: Response) {
 		const url = req.body.url
-		const result = await this.fetchService.testFetch(url)
+		const tv = req.body.tv
+		const filter = req.body.filter
+		const result = await this.fetchService.testFetch(url, tv, filter)
 		res.send(result)
 	}
 }

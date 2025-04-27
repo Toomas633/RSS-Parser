@@ -4,12 +4,11 @@
 			<FeedList
 				:feeds="feeds"
 				:loading="feedsLoading"
-				@select="selected = $event"
-				@add="add = true" />
+				@select="edit($event)"
+				@add="show = true" />
 		</v-col>
 		<v-col>
-			<FeedSettings v-if="selected" />
-			<AddFeed v-if="add" @close="closeAddTab()" />
+			<ManageFeed v-if="show" :feed="selected" @close="closeAddTab()" />
 		</v-col>
 	</v-row>
 </template>
@@ -20,7 +19,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const feeds = ref<Feed[]>([])
 const selected = ref<Feed | undefined>(undefined)
-const add = ref(false)
+const show = ref(false)
 const feedsLoading = ref(false)
 
 const updateInterval = 5000 // 5 seconds
@@ -47,7 +46,13 @@ onMounted(async () => {
 
 function closeAddTab() {
 	fetchFeeds()
-	add.value = false
+	selected.value = undefined
+	show.value = false
+}
+
+function edit(feed: Feed) {
+	show.value = true
+	selected.value = feed
 }
 </script>
 
