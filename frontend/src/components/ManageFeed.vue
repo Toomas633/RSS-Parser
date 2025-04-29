@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid>
+	<v-container fluid class="manage-feed">
 		<span class="d-flex justify-space-between align-center">
 			<h2 v-if="feed?.id" class="ml-n2 mb-2 align-center">
 				<v-icon size="29">mdi-pencil</v-icon>Edit Feed
@@ -10,32 +10,31 @@
 			<v-btn variant="plain" icon="mdi-close" @click="emit('close')" />
 		</span>
 		<FeedForm
+			:feed="feed"
 			@valid="feedValid = $event"
 			@feed="newFeed = $event"
 			@addFilters="addFilters = $event"
 			@queryType="queryType = $event" />
 		<FeedFilters v-if="addFilters" @filter="filter = $event" />
-		<div>
-			<v-btn
-				class="mt-1 mr-2"
-				color="primary"
-				variant="outlined"
-				prepend-icon="mdi-message-text-fast"
-				:disabled="testLoading"
-				:loading="testLoading"
-				@click="test">
-				Test
-			</v-btn>
-			<v-btn
-				class="mt-1 ml-2"
-				color="green"
-				prepend-icon="mdi-plus"
-				:disabled="loading"
-				:loading="loading"
-				@click="submit">
-				Submit
-			</v-btn>
-		</div>
+		<v-btn
+			class="mt-4 mr-2"
+			color="primary"
+			variant="outlined"
+			prepend-icon="mdi-message-text-fast"
+			:disabled="testLoading"
+			:loading="testLoading"
+			@click="test">
+			Test
+		</v-btn>
+		<v-btn
+			class="mt-4 ml-2"
+			color="green"
+			prepend-icon="mdi-plus"
+			:disabled="loading"
+			:loading="loading"
+			@click="submit">
+			Submit
+		</v-btn>
 		<RssView v-if="testResponse" :rss="testResponse" />
 	</v-container>
 </template>
@@ -88,7 +87,9 @@ const filter = ref<Filter>({
 onMounted(async () => {
 	if (props.feed) {
 		newFeed.value = props.feed
-		filter.value = await getFilter(props.feed.id)
+		const f = await getFilter(props.feed.id)
+		filter.value = f
+		addFilters.value = !!f
 	}
 })
 
@@ -157,3 +158,8 @@ function validateFilters() {
 	)
 }
 </script>
+<style scoped>
+.manage-feed {
+	width: calc(100% - 250px);
+}
+</style>

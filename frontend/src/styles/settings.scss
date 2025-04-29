@@ -8,5 +8,26 @@
 }
 
 .loading {
+	color: rgb(var(--v-theme-primary));
 	animation: spin 1s linear infinite; // Spins continuously
+}
+
+.edit {
+	color: rgba(var(--v-theme-primary), 0.8);
+}
+
+.edit:hover {
+	color: rgb(var(--v-theme-primary));
+}
+
+.delete {
+	color: rgba(var(--v-theme-error), 0.8);
+}
+
+.delete:hover {
+	color: rgb(var(--v-theme-error));
+}
+
+.v-input__details {
+	padding-inline: 0 !important;
 }

@@ -22,17 +22,17 @@
 			<v-col cols="4" class="pt-0 pl-1">
 				<v-checkbox
 					v-model="tv"
-					class="mt-n3"
+					class="mt-n1 ml-1"
 					color="primary"
 					hide-details
-					density="comfortable"
+					density="compact"
 					label="Filter as TV show" />
 				<v-checkbox
 					v-model="addFilters"
-					class="mt-n5"
+					class="ml-1"
 					color="primary"
 					hide-details
-					density="comfortable"
+					density="compact"
 					label="Add filters" />
 			</v-col>
 			<v-col class="pt-0">
@@ -50,7 +50,12 @@
 <script lang="ts" setup>
 import { QueryType } from '@/enums/queryType'
 import type { Feed } from '@/models/feed.model'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+
+const props = defineProps<{
+	feed?: Feed
+	filters?: boolean
+}>()
 
 const valid = ref(false)
 const name = ref('')
@@ -58,6 +63,22 @@ const url = ref('')
 const tv = ref(false)
 const addFilters = ref(false)
 const queryType = ref<QueryType>(QueryType.None)
+
+const rules = {
+	required: (value: string) => !!value || 'Required.',
+	url: (value: string) => {
+		const pattern = new RegExp(
+			'^(https?:\\/\\/)?' +
+				'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+				'((\\d{1,3}\\.){3}\\d{1,3}))' +
+				'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+				'(\\?[;&a-z\\d%_.~+=-]*)?' +
+				'(\\#[-a-z\\d_]*)?$',
+			'i'
+		)
+		return pattern.test(value) || 'Invalid URL.'
+	},
+}
 
 const emit = defineEmits<{
 	(valid: 'valid', value: boolean): void
@@ -82,19 +103,17 @@ watch(addFilters, (newValue) => emit('addFilters', newValue))
 
 watch(queryType, (newValue) => emit('queryType', newValue))
 
-const rules = {
-	required: (value: string) => !!value || 'Required.',
-	url: (value: string) => {
-		const pattern = new RegExp(
-			'^(https?:\\/\\/)?' +
-				'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-				'((\\d{1,3}\\.){3}\\d{1,3}))' +
-				'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-				'(\\?[;&a-z\\d%_.~+=-]*)?' +
-				'(\\#[-a-z\\d_]*)?$',
-			'i'
-		)
-		return pattern.test(value) || 'Invalid URL.'
-	},
-}
+onMounted(() => {
+	if (props.feed) {
+		name.value = props.feed.name
+		url.value = props.feed.url
+		tv.value = props.feed.tv ?? false
+	}
+	addFilters.value = !!props.filters
+})
 </script>
+<style scoped>
+.v-input--density-compact {
+	--v-input-control-height: 28px;
+}
+</style>

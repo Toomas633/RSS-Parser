@@ -11,11 +11,13 @@ export default createVuetify({
 			light: {
 				colors: {
 					primary: colors.amber.darken2,
+					error: colors.red.accent4,
 				},
 			},
 			dark: {
 				colors: {
 					primary: colors.amber.darken2,
+					error: colors.red.accent4,
 				},
 			},
 		},

@@ -1,16 +1,13 @@
 <template>
-	<v-row>
-		<v-col cols="2">
-			<FeedList
-				:feeds="feeds"
-				:loading="feedsLoading"
-				@select="edit($event)"
-				@add="show = true" />
-		</v-col>
-		<v-col>
-			<ManageFeed v-if="show" :feed="selected" @close="closeAddTab()" />
-		</v-col>
-	</v-row>
+	<div class="d-flex">
+		<FeedList
+			:feeds="feeds"
+			:loading="feedsLoading"
+			@edit="edit($event)"
+			@add="show = true" />
+		<ManageFeed v-if="show" :feed="selected" @close="closeAddTab()" />
+		<v-container v-else />
+	</div>
 </template>
 <script lang="ts" setup>
 import type { Feed } from '@/models/feed.model'
