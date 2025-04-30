@@ -41,8 +41,7 @@
 
 <script lang="ts" setup>
 import { testFetch } from '@/repositories/fetch.repository'
-import { computed, onMounted, ref } from 'vue'
-import FeedForm from '@/components/FeedForm.vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import type { Feed } from '@/models/feed.model'
 import { QueryType } from '@/enums/queryType'
 import type { Filter } from '@/models/filter.model'
@@ -67,6 +66,13 @@ const emit = defineEmits<(close: 'close') => void>()
 const valid = computed(() => {
 	return feedValid.value && validateFilters()
 })
+
+watch(
+	() => props.feed,
+	() => {
+		testResponse.value = ''
+	}
+)
 
 const newFeed = ref<Feed>({
 	id: 0,
@@ -94,6 +100,7 @@ onMounted(async () => {
 })
 
 async function test() {
+	testResponse.value = ''
 	if (valid.value) {
 		testLoading.value = true
 		testResponse.value = await testFetch(

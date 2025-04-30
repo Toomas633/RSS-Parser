@@ -28,6 +28,10 @@
 	color: rgb(var(--v-theme-error));
 }
 
+.required label::after {
+	content: '*';
+}
+
 .v-input__details {
 	padding-inline: 0 !important;
 }

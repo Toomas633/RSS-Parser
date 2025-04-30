@@ -5,6 +5,7 @@
 				<v-text-field
 					v-model="name"
 					:rules="[rules.required]"
+					class="required"
 					density="comfortable"
 					color="primary"
 					label="Name"
@@ -14,6 +15,7 @@
 				<v-text-field
 					v-model="url"
 					:rules="[rules.required, rules.url]"
+					class="required"
 					density="comfortable"
 					color="primary"
 					label="URL"
@@ -50,7 +52,8 @@
 <script lang="ts" setup>
 import { QueryType } from '@/enums/queryType'
 import type { Feed } from '@/models/feed.model'
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
+import type { VForm } from 'vuetify/components'
 
 const props = defineProps<{
 	feed?: Feed
@@ -63,6 +66,7 @@ const url = ref('')
 const tv = ref(false)
 const addFilters = ref(false)
 const queryType = ref<QueryType>(QueryType.None)
+const feedForm = ref<VForm>()
 
 const rules = {
 	required: (value: string) => !!value || 'Required.',
@@ -103,14 +107,27 @@ watch(addFilters, (newValue) => emit('addFilters', newValue))
 
 watch(queryType, (newValue) => emit('queryType', newValue))
 
-onMounted(() => {
-	if (props.feed) {
-		name.value = props.feed.name
-		url.value = props.feed.url
-		tv.value = props.feed.tv ?? false
-	}
-	addFilters.value = !!props.filters
-})
+watch(
+	() => props.feed,
+	(newValue) => {
+		if (newValue) {
+			name.value = newValue.name
+			url.value = newValue.url
+			tv.value = !!newValue.tv
+		} else {
+			feedForm.value?.reset()
+		}
+	},
+	{ immediate: true }
+)
+
+watch(
+	() => props.filters,
+	(newValue) => {
+		addFilters.value = !!newValue
+	},
+	{ immediate: true }
+)
 </script>
 <style scoped>
 .v-input--density-compact {

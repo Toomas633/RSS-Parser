@@ -3,9 +3,9 @@
 		<FeedList
 			:feeds="feeds"
 			:loading="feedsLoading"
-			@edit="edit($event)"
-			@add="show = true" />
-		<ManageFeed v-if="show" :feed="selected" @close="closeAddTab()" />
+			@edit="changeForm($event)"
+			@add="changeForm" />
+		<ManageFeed v-if="show" :feed="selected" @close="closeForm()" />
 		<v-container v-else />
 	</div>
 </template>
@@ -19,7 +19,7 @@ const selected = ref<Feed | undefined>(undefined)
 const show = ref(false)
 const feedsLoading = ref(false)
 
-const updateInterval = 5000 // 5 seconds
+const updateInterval = 10000 // 10 seconds
 
 const fetchFeeds = async () => {
 	feedsLoading.value = true
@@ -41,15 +41,19 @@ onMounted(async () => {
 	})
 })
 
-function closeAddTab() {
+function closeForm() {
 	fetchFeeds()
 	selected.value = undefined
 	show.value = false
 }
 
-function edit(feed: Feed) {
+function changeForm(feed?: Feed) {
+	if (feed) {
+		selected.value = feed
+	} else {
+		selected.value = undefined
+	}
 	show.value = true
-	selected.value = feed
 }
 </script>
 
