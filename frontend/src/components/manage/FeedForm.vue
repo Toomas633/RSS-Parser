@@ -124,7 +124,7 @@ watch(
 watch(
 	() => props.filters,
 	(newValue) => {
-		addFilters.value = !!newValue
+		addFilters.value = newValue
 	},
 	{ immediate: true }
 )

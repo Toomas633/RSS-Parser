@@ -25,7 +25,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/requestBodies/FilterAddEdit'
+              $ref: '#/components/requestBodies/FilterAdd'
       responses:
         200:
           description: The created filter.
@@ -76,7 +76,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/requestBodies/FilterAddEdit'
+              $ref: '#/components/requestBodies/FilterEdit'
       responses:
         200:
           description: The updated filter.

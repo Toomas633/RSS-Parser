@@ -11,11 +11,12 @@
 		</span>
 		<FeedForm
 			:feed="feed"
+			:filters="!!filter"
 			@valid="feedValid = $event"
 			@feed="newFeed = $event"
 			@addFilters="addFilters = $event"
 			@queryType="queryType = $event" />
-		<FeedFilters v-if="addFilters" @filter="filter = $event" />
+		<FeedFilters v-if="addFilters" :filter="filter" @filter="filter = $event" />
 		<v-btn
 			class="mt-4 mr-2"
 			color="primary"
@@ -60,6 +61,7 @@ const props = defineProps<{
 const loading = ref(false)
 const testLoading = ref(false)
 const testResponse = ref('')
+const hadFilter = ref(false)
 
 const emit = defineEmits<(close: 'close') => void>()
 
@@ -69,8 +71,16 @@ const valid = computed(() => {
 
 watch(
 	() => props.feed,
-	() => {
+	async () => {
 		testResponse.value = ''
+		if (props.feed?.id) {
+			const f = await getFilter(props.feed.id)
+			filter.value = f
+			addFilters.value = !!f
+			hadFilter.value = !!f
+		} else {
+			hadFilter.value = false
+		}
 	}
 )
 
@@ -96,6 +106,7 @@ onMounted(async () => {
 		const f = await getFilter(props.feed.id)
 		filter.value = f
 		addFilters.value = !!f
+		hadFilter.value = !!f
 	}
 })
 
@@ -134,9 +145,16 @@ async function submit() {
 async function update(feed: Feed) {
 	await updateFeed(feed.id, feed)
 	if (addFilters.value && filter.value) {
-		await updateFilter(feed.id, filter.value)
+		if (hadFilter.value) {
+			await updateFilter(feed.id, filter.value)
+		} else {
+			await addFilter({
+				...filter.value,
+				feedId: feed.id,
+			})
+		}
 	}
-	if (!addFilters.value && filter.value) {
+	if (!addFilters.value && hadFilter.value) {
 		await deleteFilter(feed.id)
 	}
 }

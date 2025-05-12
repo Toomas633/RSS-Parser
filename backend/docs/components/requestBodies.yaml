@@ -16,7 +16,27 @@ components:
       required:
         - name
         - url
-    FilterAddEdit: 
+    FilterAdd:
+      type: object
+      properties:
+        feedId:
+          type: integer
+          description: The ID of the feed to which the filter applies
+        exclude:
+          type: array
+          items:
+            type: string
+          description: List of keywords to exclude
+        seasonStart:
+          type: integer
+          description: Minimum season number to include
+        episodeStart:
+          type: integer
+          description: Minimum episode number to include
+        showName:
+          type: string
+          description: Name of the show to filter
+    FilterEdit:
       type: object
       properties:
         exclude:

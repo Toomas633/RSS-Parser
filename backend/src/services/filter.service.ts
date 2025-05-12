@@ -4,6 +4,7 @@ import {
 	loadFiltersFromFile,
 	validateFilter,
 } from '@/utils/filter.utils'
+import { Error } from '@/models/error.model'
 
 export class FilterService {
 	getFilters(feedId?: number) {
@@ -11,9 +12,12 @@ export class FilterService {
 	}
 
 	addFilter(filter: Partial<Filter>) {
+		if (filter.feedId === undefined) {
+			throw new Error('Feed ID is required to add a filter', 400)
+		}
 		validateFilter(filter)
 		const filters = loadFiltersFromFile()
-		filters.push({ id: filters.length + 1, ...filter } as Filter)
+		filters.push({ ...filter } as Filter)
 		addFiltersToFile(filters)
 	}
 

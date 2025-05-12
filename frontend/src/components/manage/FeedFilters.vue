@@ -1,5 +1,5 @@
 <template>
-	<v-form ref="filters" v-model="valid" lazy-validation>
+	<v-form ref="filterForm" v-model="valid" lazy-validation>
 		<v-row>
 			<v-col cols="4">
 				<v-text-field
@@ -48,14 +48,35 @@
 import type { Filter } from '@/models/filter.model'
 import { formatFilter } from '@/utils/filter.utils'
 import { ref, watch } from 'vue'
+import type { VForm } from 'vuetify/components'
+
+const props = defineProps<{
+	filter?: Filter
+}>()
 
 const valid = ref(false)
 const exclude = ref<string>('')
 const seasonStart = ref(0)
 const episodeStart = ref(0)
 const showName = ref('')
+const filterForm = ref<VForm>()
 
 const emit = defineEmits<(filters: 'filter', value: Filter) => void>()
+
+watch(
+	() => props.filter,
+	(newValue) => {
+		if (newValue) {
+			exclude.value = newValue.exclude?.join(', ') ?? ''
+			seasonStart.value = newValue.seasonStart ?? 0
+			episodeStart.value = newValue.episodeStart ?? 0
+			showName.value = newValue.showName ?? ''
+		} else {
+			filterForm.value?.reset()
+		}
+	},
+	{ immediate: true }
+)
 
 watch([showName, seasonStart, episodeStart, exclude], (newVal) => {
 	const filter: Filter = {
