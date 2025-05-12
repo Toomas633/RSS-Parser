@@ -36,13 +36,22 @@
 			@click="submit">
 			Submit
 		</v-btn>
+		<v-chip
+			class="ml-4 mt-4"
+			variant="outlined"
+			color="primary"
+			style="width: 5rem"
+			prepend-icon="mdi-clock-time-four-outline"
+			v-if="testTimer">
+			{{ testTimer / 1000 }}s
+		</v-chip>
 		<RssView v-if="testResponse" :rss="testResponse" />
 	</v-container>
 </template>
 
 <script lang="ts" setup>
 import { testFetch } from '@/repositories/fetch.repository'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import type { Feed } from '@/models/feed.model'
 import { QueryType } from '@/enums/queryType'
 import type { Filter } from '@/models/filter.model'
@@ -62,6 +71,23 @@ const loading = ref(false)
 const testLoading = ref(false)
 const testResponse = ref('')
 const hadFilter = ref(false)
+const testTimer = ref(0)
+let timerInterval: ReturnType<typeof setInterval> | null = null
+const newFeed = ref<Feed>({
+	id: 0,
+	name: '',
+	url: '',
+	tv: false,
+})
+const feedValid = ref(false)
+const addFilters = ref(false)
+const queryType = ref<QueryType>(QueryType.None)
+const filter = ref<Filter | undefined>({
+	showName: '',
+	seasonStart: 0,
+	episodeStart: 0,
+	exclude: [],
+})
 
 const emit = defineEmits<(close: 'close') => void>()
 
@@ -69,10 +95,22 @@ const valid = computed(() => {
 	return feedValid.value && validateFilters()
 })
 
+watch(testLoading, (val) => {
+	if (val) {
+		testTimer.value = 0
+		timerInterval = setInterval(() => {
+			testTimer.value += 10
+		}, 10)
+	} else if (timerInterval) {
+		clearInterval(timerInterval)
+		timerInterval = null
+	}
+})
+
 watch(
 	() => props.feed,
 	async () => {
-		testResponse.value = ''
+		reset()
 		if (props.feed?.id) {
 			const f = await getFilter(props.feed.id)
 			filter.value = f
@@ -83,22 +121,6 @@ watch(
 		}
 	}
 )
-
-const newFeed = ref<Feed>({
-	id: 0,
-	name: '',
-	url: '',
-	tv: false,
-})
-const feedValid = ref(false)
-const addFilters = ref(false)
-const queryType = ref<QueryType>(QueryType.None)
-const filter = ref<Filter>({
-	showName: '',
-	seasonStart: 0,
-	episodeStart: 0,
-	exclude: [],
-})
 
 onMounted(async () => {
 	if (props.feed) {
@@ -120,7 +142,10 @@ async function test() {
 			addFilters.value ? filter.value : undefined
 		)
 			.then((response) => {
-				return response as string
+				if (testLoading.value) {
+					return response as string
+				}
+				return ''
 			})
 			.finally(() => (testLoading.value = false))
 	}
@@ -182,6 +207,22 @@ function validateFilters() {
 		(Array.isArray(f.exclude) && f.exclude.length > 0)
 	)
 }
+
+function reset() {
+	filter.value = undefined
+	hadFilter.value = false
+	addFilters.value = false
+	testResponse.value = ''
+	testLoading.value = false
+	if (timerInterval) {
+		clearInterval(timerInterval)
+	}
+	testTimer.value = 0
+}
+
+onUnmounted(() => {
+	reset()
+})
 </script>
 <style scoped>
 .manage-feed {

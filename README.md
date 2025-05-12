@@ -1,8 +1,9 @@
 # TODO:
 
 - [ ] jackett query builder
+  - [ ] quality filter
 - [ ] showrss query builder
-- [ ] quality filter
-- [ ] Timer on test query
+  - [ ] quality filter
 - [ ] Notifications
 - [ ] Responsive view
+- [ ] Version checking
