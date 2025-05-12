@@ -10,12 +10,19 @@
 		<div v-for="(feed, index) in feeds" :key="feed.id">
 			<v-card class="mb-4 pb-2 pr-2">
 				<div class="d-flex justify-space-between align-center">
-					<v-card-title class="py-1">{{ feed.name }}</v-card-title>
+					<v-card-title class="ellipsis py-1">
+						{{ feed.name }}
+					</v-card-title>
 					<span>
-						<v-icon class="edit" @click="emitSelected(feed, index)">
+						<v-icon
+							class="edit"
+							:disabled="active === index || loading"
+							@click="emitSelected(feed, index)">
 							mdi-pencil
 						</v-icon>
-						<v-icon class="delete" @click="null">mdi-delete</v-icon>
+						<v-icon class="delete" :disabled="loading" @click="null">
+							mdi-delete
+						</v-icon>
 					</span>
 				</div>
 				<v-card-subtitle>{{ feed.url }}</v-card-subtitle>
@@ -50,3 +57,8 @@ function emitAddNew() {
 	emit('add')
 }
 </script>
+<style scoped>
+.v-card-title {
+	width: 10rem;
+}
+</style>

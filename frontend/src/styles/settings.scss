@@ -35,3 +35,9 @@
 .v-input__details {
 	padding-inline: 0 !important;
 }
+
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
