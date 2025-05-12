@@ -4,14 +4,16 @@
 			:feeds="feeds"
 			:loading="feedsLoading"
 			@edit="changeForm($event)"
-			@add="changeForm" />
+			@add="changeForm"
+			@delete="deleteFeedById($event)" />
 		<ManageFeed v-if="show" :feed="selected" @close="closeForm()" />
 		<v-container v-else />
 	</div>
 </template>
 <script lang="ts" setup>
 import type { Feed } from '@/models/feed.model'
-import { getFeeds } from '@/repositories/feed.repository'
+import { deleteFeed, getFeeds } from '@/repositories/feed.repository'
+import { deleteFilter } from '@/repositories/filter.repository'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 const feeds = ref<Feed[]>([])
@@ -54,6 +56,17 @@ function changeForm(feed?: Feed) {
 		selected.value = undefined
 	}
 	show.value = true
+}
+
+function deleteFeedById(id: number) {
+	deleteFeed(id)
+		.then(() => {
+			deleteFilter(id)
+			fetchFeeds()
+		})
+		.catch((error) => {
+			console.error('Error deleting feed:', error)
+		})
 }
 </script>
 

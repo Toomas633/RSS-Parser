@@ -13,8 +13,12 @@ declare module 'vue' {
     FeedForm: typeof import('./src/components/manage/FeedForm.vue')['default']
     FeedList: typeof import('./src/components/FeedList.vue')['default']
     ManageFeed: typeof import('./src/components/ManageFeed.vue')['default']
+    Notification: typeof import('./src/components/Notification.vue')['default']
+    NotificationComponent: typeof import('./src/components/NotificationComponent.vue')['default']
+    NotificationPopup: typeof import('./src/components/NotificationPopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RssView: typeof import('./src/components/manage/RssView.vue')['default']
+    VersionNumber: typeof import('./src/components/header/VersionNumber.vue')['default']
   }
 }

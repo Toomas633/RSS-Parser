@@ -20,7 +20,10 @@
 							@click="emitSelected(feed, index)">
 							mdi-pencil
 						</v-icon>
-						<v-icon class="delete" :disabled="loading" @click="null">
+						<v-icon
+							class="delete"
+							:disabled="loading"
+							@click="deleteFeed(feed.id)">
 							mdi-delete
 						</v-icon>
 					</span>
@@ -43,8 +46,9 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-	(select: 'edit', feed: Feed): void
-	(add: 'add'): void
+	(event: 'edit', feed: Feed): void
+	(event: 'add'): void
+	(event: 'delete', id: number): void
 }>()
 
 function emitSelected(feed: Feed, index: number) {
@@ -55,6 +59,11 @@ function emitSelected(feed: Feed, index: number) {
 function emitAddNew() {
 	active.value = undefined
 	emit('add')
+}
+
+function deleteFeed(id: number) {
+	active.value = undefined
+	emit('delete', id)
 }
 </script>
 <style scoped>
