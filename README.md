@@ -6,4 +6,4 @@
   - [ ] quality filter
 - [ ] Notifications
 - [ ] Responsive view
-- [ ] Version checking
+- [ ] Delete confirming

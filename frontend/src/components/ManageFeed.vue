@@ -165,6 +165,7 @@ async function submit() {
 		}
 	}
 	loading.value = false
+	emit('close')
 }
 
 async function update(feed: Feed) {
@@ -196,7 +197,7 @@ async function addNew(feed: Feed) {
 }
 
 function validateFilters() {
-	if (!addFilters.value) {
+	if (!addFilters.value || !filter.value) {
 		return true
 	}
 	const f = filter.value
