@@ -1,5 +1,6 @@
 <template>
 	<v-form ref="filterForm" v-model="valid" lazy-validation>
+		<h3><v-icon class="mr-2">mdi-filter</v-icon>Filters</h3>
 		<v-row>
 			<v-col cols="4">
 				<v-text-field

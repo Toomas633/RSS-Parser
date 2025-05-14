@@ -1,9 +1,8 @@
 # TODO:
 
-- [ ] jackett query builder
-  - [ ] quality filter
-- [ ] showrss query builder
-  - [ ] quality filter
+- [ ] Jackett query builder
+- [ ] Test query display filter
+- [ ] Test query find functionality
 - [ ] Notifications
 - [ ] Responsive view
 - [ ] Delete confirming

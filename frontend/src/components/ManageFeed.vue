@@ -1,10 +1,10 @@
 <template>
 	<v-container fluid class="manage-feed">
-		<span class="d-flex justify-space-between align-center">
-			<h2 v-if="feed?.id" class="ml-n2 mb-2 align-center">
+		<span class="d-flex justify-space-between">
+			<h2 v-if="feed?.id" class="ml-n2 mb-2">
 				<v-icon size="29">mdi-pencil</v-icon>Edit Feed
 			</h2>
-			<h2 v-else class="ml-n2 mb-2 align-center">
+			<h2 v-else class="ml-n2 mb-2">
 				<v-icon size="29">mdi-plus</v-icon>Add Feed
 			</h2>
 			<v-btn variant="plain" icon="mdi-close" @click="emit('close')" />
@@ -30,11 +30,11 @@
 		<v-btn
 			class="mt-4 ml-2"
 			color="green"
-			prepend-icon="mdi-plus"
+			prepend-icon="mdi-content-save"
 			:disabled="loading"
 			:loading="loading"
 			@click="submit">
-			Submit
+			Save
 		</v-btn>
 		<v-chip
 			class="ml-4 mt-4"
@@ -82,12 +82,7 @@ const newFeed = ref<Feed>({
 const feedValid = ref(false)
 const addFilters = ref(false)
 const queryType = ref<QueryType>(QueryType.None)
-const filter = ref<Filter | undefined>({
-	showName: '',
-	seasonStart: 0,
-	episodeStart: 0,
-	exclude: [],
-})
+const filter = ref<Filter | undefined>(undefined)
 
 const emit = defineEmits<(close: 'close') => void>()
 

@@ -41,15 +41,21 @@
 				<v-select
 					v-model="queryType"
 					:items="Object.values(QueryType)"
-					label="Quary builder type "
+					label="Query builder type "
 					density="comfortable"
-					color="primary"
-					hide-details />
+					persistent-hint
+					:hint="QueryTypesHint"
+					color="primary" />
 			</v-col>
 		</v-row>
+		<ShowRssForm
+			v-if="queryType === QueryType.ShowRss"
+			:url="url"
+			@update="url = $event" />
 	</v-form>
 </template>
 <script lang="ts" setup>
+import { QueryTypesHint } from '@/const/Consts'
 import { QueryType } from '@/enums/queryType'
 import type { Feed } from '@/models/feed.model'
 import { ref, watch } from 'vue'

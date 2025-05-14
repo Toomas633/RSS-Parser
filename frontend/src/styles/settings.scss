@@ -29,7 +29,7 @@
 }
 
 .required label::after {
-	content: '*';
+	content: ' *';
 }
 
 .v-input__details {

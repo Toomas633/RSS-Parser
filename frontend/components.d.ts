@@ -19,6 +19,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RssView: typeof import('./src/components/manage/RssView.vue')['default']
+    ShowRssForm: typeof import('./src/components/manage/ShowRssForm.vue')['default']
     VersionNumber: typeof import('./src/components/header/VersionNumber.vue')['default']
   }
 }
