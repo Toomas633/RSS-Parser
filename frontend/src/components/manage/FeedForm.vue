@@ -19,7 +19,21 @@
 					density="comfortable"
 					color="primary"
 					label="URL"
-					required />
+					required>
+					<template #append-inner>
+						<v-tooltip text="Reset URL">
+							<template #activator="{ props }">
+								<v-btn
+									v-if="url !== oldUrl"
+									icon="mdi-restore"
+									variant="text"
+									size="small"
+									v-bind="props"
+									@click="url = oldUrl" />
+							</template>
+						</v-tooltip>
+					</template>
+				</v-text-field>
 			</v-col>
 			<v-col cols="4" class="pt-0 pl-1">
 				<v-checkbox
@@ -82,6 +96,7 @@ const addFilters = ref(false)
 const queryType = ref<QueryType>(QueryType.None)
 const feedForm = ref<VForm>()
 const queryTypeOptions = ref<SelectOption<QueryType>[]>([])
+const oldUrl = ref('')
 
 const rules = {
 	required: (value: string) => !!value || 'Required.',
@@ -158,7 +173,9 @@ watch(
 			name.value = newValue.name
 			url.value = newValue.url
 			tv.value = !!newValue.tv
+			oldUrl.value = newValue.url
 		} else {
+			oldUrl.value = ''
 			feedForm.value?.reset()
 		}
 	},
