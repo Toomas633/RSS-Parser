@@ -112,11 +112,13 @@ watch(url, (newValue) => {
 	if (newValue) {
 		const params = new URL(newValue).searchParams
 		if (checkJackettParams(params)) {
+			queryType.value = QueryType.Jackett
 			queryTypeOptions.value = QueryTypeOptions.map((item) => ({
 				...item,
 				props: { disabled: item.value === QueryType.ShowRss },
 			}))
 		} else if (checkShowRssParams(params)) {
+			queryType.value = QueryType.ShowRss
 			queryTypeOptions.value = QueryTypeOptions.map((item) => ({
 				...item,
 				props: { disabled: item.value === QueryType.Jackett },
