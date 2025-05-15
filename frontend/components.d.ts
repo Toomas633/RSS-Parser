@@ -24,4 +24,3 @@ declare module 'vue' {
     VersionNumber: typeof import('./src/components/header/VersionNumber.vue')['default']
   }
 }
-

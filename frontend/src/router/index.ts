@@ -25,4 +25,3 @@ router.isReady().then(() => {
 })
 
 export default router
-

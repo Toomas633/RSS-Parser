@@ -69,4 +69,3 @@ function deleteFeedById(id: number) {
 		})
 }
 </script>
-

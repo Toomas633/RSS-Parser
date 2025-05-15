@@ -6,4 +6,3 @@
 		</v-main>
 	</v-app>
 </template>
-
