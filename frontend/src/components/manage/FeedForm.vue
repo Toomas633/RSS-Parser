@@ -40,7 +40,10 @@
 			<v-col class="pt-0">
 				<v-select
 					v-model="queryType"
-					:items="Object.values(QueryType)"
+					:items="queryTypeOptions"
+					item-value="value"
+					item-title="display"
+					item-props="props"
 					label="Query builder type "
 					density="comfortable"
 					persistent-hint
@@ -59,9 +62,10 @@
 	</v-form>
 </template>
 <script lang="ts" setup>
-import { QueryTypesHint } from '@/const/Consts'
+import { QueryTypeOptions, QueryTypesHint } from '@/const/Consts'
 import { QueryType } from '@/enums/queryType'
 import type { Feed } from '@/models/feed.model'
+import type { SelectOption } from '@/models/select.model'
 import { ref, watch } from 'vue'
 import type { VForm } from 'vuetify/components'
 
@@ -77,6 +81,7 @@ const tv = ref(false)
 const addFilters = ref(false)
 const queryType = ref<QueryType>(QueryType.None)
 const feedForm = ref<VForm>()
+const queryTypeOptions = ref<SelectOption<QueryType>[]>([])
 
 const rules = {
 	required: (value: string) => !!value || 'Required.',
@@ -102,6 +107,33 @@ const emit = defineEmits<{
 }>()
 
 watch(valid, (newValue) => emit('valid', newValue))
+
+watch(url, (newValue) => {
+	if (newValue) {
+		const params = new URL(newValue).searchParams
+		if (checkJackettParams(params)) {
+			queryTypeOptions.value = QueryTypeOptions.map((item) => ({
+				...item,
+				props: { disabled: item.value === QueryType.ShowRss },
+			}))
+		} else if (checkShowRssParams(params)) {
+			queryTypeOptions.value = QueryTypeOptions.map((item) => ({
+				...item,
+				props: { disabled: item.value === QueryType.Jackett },
+			}))
+		} else {
+			queryTypeOptions.value = QueryTypeOptions.map((item) => ({
+				...item,
+				props: { disabled: false },
+			}))
+		}
+	} else {
+		queryTypeOptions.value = QueryTypeOptions.map((item) => ({
+			...item,
+			props: { disabled: false },
+		}))
+	}
+})
 
 watch([name, url, tv], (newValue) => {
 	const feed: Feed = {
@@ -138,6 +170,20 @@ watch(
 	},
 	{ immediate: true }
 )
+
+function checkShowRssParams(params: URLSearchParams) {
+	return (
+		params.get('magnets') &&
+		params.get('namespaces') &&
+		params.get('name') &&
+		params.get('quality') &&
+		params.get('re')
+	)
+}
+
+function checkJackettParams(params: URLSearchParams) {
+	return params.get('apikey') && params.get('q')
+}
 </script>
 <style scoped>
 .v-input--density-compact {
