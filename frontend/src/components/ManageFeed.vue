@@ -62,6 +62,7 @@ import {
 	getFilter,
 	updateFilter,
 } from '@/repositories/filter.repository'
+import { isEmpty } from '@/utils/utils.ts'
 
 const props = defineProps<{
 	feed?: Feed
@@ -107,7 +108,8 @@ watch(
 	async () => {
 		reset()
 		if (props.feed?.id) {
-			const f = await getFilter(props.feed.id)
+			let f = await getFilter(props.feed.id)
+			f = isEmpty(f) ? undefined : f
 			filter.value = f
 			addFilters.value = !!f
 			hadFilter.value = !!f
