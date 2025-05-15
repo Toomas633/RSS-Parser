@@ -52,6 +52,10 @@
 			v-if="queryType === QueryType.ShowRss"
 			:url="url"
 			@update="url = $event" />
+		<JackettForm
+			v-if="queryType === QueryType.Jackett"
+			:url="url"
+			@update="url = $event" />
 	</v-form>
 </template>
 <script lang="ts" setup>

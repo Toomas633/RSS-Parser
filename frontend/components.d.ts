@@ -12,6 +12,7 @@ declare module 'vue' {
     FeedFilters: typeof import('./src/components/manage/FeedFilters.vue')['default']
     FeedForm: typeof import('./src/components/manage/FeedForm.vue')['default']
     FeedList: typeof import('./src/components/FeedList.vue')['default']
+    JackettForm: typeof import('./src/components/manage/JackettForm.vue')['default']
     ManageFeed: typeof import('./src/components/ManageFeed.vue')['default']
     Notification: typeof import('./src/components/Notification.vue')['default']
     NotificationComponent: typeof import('./src/components/NotificationComponent.vue')['default']
@@ -23,3 +24,4 @@ declare module 'vue' {
     VersionNumber: typeof import('./src/components/header/VersionNumber.vue')['default']
   }
 }
+
