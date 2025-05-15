@@ -46,5 +46,9 @@
 	},
 	"[xml]": {
 		"editor.defaultFormatter": "redhat.vscode-xml"
+	},
+	"sonarlint.connectedMode.project": {
+		"connectionId": "toomas633",
+		"projectKey": "Toomas633_RSS-Parser"
 	}
 }
