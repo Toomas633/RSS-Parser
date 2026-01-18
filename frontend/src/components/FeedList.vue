@@ -35,7 +35,7 @@
 	</v-container>
 </template>
 <script lang="ts" setup>
-import type { Feed } from '@/models/feed.model'
+import type { Feed } from '../models/feed.model'
 import { ref } from 'vue'
 
 const active = ref<number | undefined>()

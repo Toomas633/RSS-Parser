@@ -1,4 +1,4 @@
-import type { Filter } from '@/models/filter.model'
+import type { Filter } from '../models/filter.model'
 
 export function formatFilter(filter: Filter) {
 	return {

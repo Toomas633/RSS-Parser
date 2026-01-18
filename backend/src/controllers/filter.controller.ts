@@ -1,4 +1,5 @@
 import { FilterService } from '@/services/filter.service'
+import { getParamId } from '@/utils/string.utils'
 import { Request, Response } from 'express'
 
 export class FilterController {
@@ -10,7 +11,7 @@ export class FilterController {
 
 	public getFilter(req: Request, res: Response) {
 		const filter = this.filterService.getFilters(
-			parseInt(req.params.feedId, 10)
+			Number.parseInt(getParamId(req.params.feedId), 10)
 		)
 		if (filter) {
 			res.status(200).send(filter[0])
@@ -24,13 +25,13 @@ export class FilterController {
 	}
 
 	public deleteFilter(req: Request, res: Response) {
-		const feedId = parseInt(req.params.feedId, 10)
+		const feedId = Number.parseInt(getParamId(req.params.feedId), 10)
 		this.filterService.deleteFilter(feedId)
 		res.send(this.filterService.deleteFilter(feedId))
 	}
 
 	public editFilter(req: Request, res: Response) {
-		const feedId = parseInt(req.params.feedId, 10)
+		const feedId = Number.parseInt(getParamId(req.params.feedId), 10)
 		res.send(this.filterService.editFilter(feedId, req.body))
 	}
 }

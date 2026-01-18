@@ -46,8 +46,8 @@
 	</v-form>
 </template>
 <script lang="ts" setup>
-import type { Filter } from '@/models/filter.model'
-import { formatFilter } from '@/utils/filter.utils'
+import type { Filter } from '../../models/filter.model'
+import { formatFilter } from '../../utils/filter.utils'
 import { ref, watch } from 'vue'
 import type { VForm } from 'vuetify/components'
 

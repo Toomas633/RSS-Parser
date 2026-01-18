@@ -1,6 +1,6 @@
-import type { Filter } from '@/models/filter.model'
-import { api } from '@/utils/axios/api'
-import { handleAxiosError } from '@/utils/error'
+import type { Filter } from '../models/filter.model'
+import { api } from '../utils/axios/api'
+import { handleAxiosError } from '../utils/error'
 
 export async function testFetch(
 	url: string,

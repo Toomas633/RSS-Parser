@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { FeedService } from '@/services/feed.service'
 import { FilterService } from '@/services/filter.service'
+import { getParamId } from '@/utils/string.utils'
 
 export class FeedController {
 	constructor(
@@ -17,7 +18,7 @@ export class FeedController {
 	}
 
 	public getFeed(req: Request, res: Response) {
-		const feedId = parseInt(req.params.id, 10)
+		const feedId = Number.parseInt(getParamId(req.params.id), 10)
 		const feed = this.feedService.getFeed(feedId)
 
 		if (feed) {
@@ -28,13 +29,13 @@ export class FeedController {
 	}
 
 	public deleteFeed(req: Request, res: Response) {
-		const feedId = parseInt(req.params.id, 10)
+		const feedId = Number.parseInt(getParamId(req.params.id), 10)
 		this.filterService.deleteFilter(feedId)
 		res.send(this.feedService.deleteFeed(feedId))
 	}
 
 	public editFeed(req: Request, res: Response) {
-		const feedId = parseInt(req.params.id, 10)
+		const feedId = Number.parseInt(getParamId(req.params.id), 10)
 		res.send(this.feedService.editFeed(feedId, req.body))
 	}
 }

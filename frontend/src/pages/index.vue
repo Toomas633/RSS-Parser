@@ -11,9 +11,9 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import type { Feed } from '@/models/feed.model'
-import { deleteFeed, getFeeds } from '@/repositories/feed.repository'
-import { deleteFilter } from '@/repositories/filter.repository'
+import type { Feed } from '../models/feed.model'
+import { deleteFeed, getFeeds } from '../repositories/feed.repository'
+import { deleteFilter } from '../repositories/filter.repository'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 const feeds = ref<Feed[]>([])

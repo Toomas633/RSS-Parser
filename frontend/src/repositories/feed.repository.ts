@@ -1,6 +1,6 @@
-import type { Feed } from '@/models/feed.model'
-import { api } from '@/utils/axios/api'
-import { handleAxiosError } from '@/utils/error'
+import type { Feed } from '../models/feed.model'
+import { api } from '../utils/axios/api'
+import { handleAxiosError } from '../utils/error'
 
 export async function getFeeds() {
 	return api

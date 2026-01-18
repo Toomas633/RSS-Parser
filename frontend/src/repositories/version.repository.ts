@@ -1,5 +1,5 @@
-import { repo } from '@/utils/axios/repo'
-import { handleAxiosError } from '@/utils/error'
+import { repo } from '../utils/axios/repo'
+import { handleAxiosError } from '../utils/error'
 
 export async function getVersion() {
 	return repo

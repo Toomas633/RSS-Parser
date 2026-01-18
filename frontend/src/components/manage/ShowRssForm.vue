@@ -69,7 +69,7 @@ import {
 	ShowRssLinkType,
 	ShowRssProperRepack,
 	ShowRssQuality,
-} from '@/const/ShowRss'
+} from '../../const/ShowRss'
 import { ref, watch } from 'vue'
 import type { VForm } from 'vuetify/components'
 

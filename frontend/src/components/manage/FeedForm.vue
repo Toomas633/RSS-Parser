@@ -76,10 +76,10 @@
 	</v-form>
 </template>
 <script lang="ts" setup>
-import { QueryTypeOptions, QueryTypesHint } from '@/const/Consts'
-import { QueryType } from '@/enums/queryType'
-import type { Feed } from '@/models/feed.model'
-import type { SelectOption } from '@/models/select.model'
+import { QueryTypeOptions, QueryTypesHint } from '../../const/Consts'
+import { QueryType } from '../../enums/queryType'
+import type { Feed } from '../../models/feed.model'
+import type { SelectOption } from '../../models/select.model'
 import { ref, watch } from 'vue'
 import type { VForm } from 'vuetify/components'
 

@@ -19,3 +19,7 @@ export function capitalize(str: string, index: number) {
 	if (index > 0 && minorWords.includes(str)) return str
 	return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export function getParamId(id: string | string[]) {
+		return Array.isArray(id) ? id[0] : id
+	}

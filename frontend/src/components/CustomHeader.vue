@@ -16,8 +16,8 @@
 	</v-app-bar>
 </template>
 <script setup lang="ts">
-import { getVersion } from '@/repositories/version.repository'
-import { isNewer } from '@/utils/version'
+import { getVersion } from '../repositories/version.repository'
+import { isNewer } from '../utils/version'
 import { onMounted, ref } from 'vue'
 
 const version = import.meta.env.VITE_VERSION
@@ -26,7 +26,7 @@ const update = ref(false)
 
 onMounted(async () => {
 	getVersion().then((v) => {
-		if (isNewer(v, version)) {
+		if (v && isNewer(v, version)) {
 			update.value = true
 			newVersion.value = v
 		}

@@ -50,19 +50,19 @@
 </template>
 
 <script lang="ts" setup>
-import { testFetch } from '@/repositories/fetch.repository'
+import { testFetch } from '../repositories/fetch.repository'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import type { Feed } from '@/models/feed.model'
-import { QueryType } from '@/enums/queryType'
-import type { Filter } from '@/models/filter.model'
-import { addFeed, updateFeed } from '@/repositories/feed.repository'
+import type { Feed } from '../models/feed.model'
+import { QueryType } from '../enums/queryType'
+import type { Filter } from '../models/filter.model'
+import { addFeed, updateFeed } from '../repositories/feed.repository'
 import {
 	addFilter,
 	deleteFilter,
 	getFilter,
 	updateFilter,
-} from '@/repositories/filter.repository'
-import { isEmpty } from '@/utils/utils.ts'
+} from '../repositories/filter.repository'
+import { isEmpty } from '../utils/utils.ts'
 
 const props = defineProps<{
 	feed?: Feed

@@ -1,4 +1,4 @@
-import type { SelectOption } from '@/models/select.model'
+import type { SelectOption } from '../models/select.model'
 
 export const ShowRssQuality: SelectOption<string>[] = [
 	{ display: 'Per-show settings (recommended)', value: null },
